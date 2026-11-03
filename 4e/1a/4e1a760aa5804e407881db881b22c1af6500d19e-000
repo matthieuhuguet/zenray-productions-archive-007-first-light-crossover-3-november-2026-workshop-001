@@ -1,0 +1,72 @@
+{
+  "title": "007 First Light : correctif CrossOver GPTK 4",
+  "eyebrow": "SYNTHÈSE TECHNIQUE ET ARCHITECTURE DU SERVICE",
+  "subtitle": "Résolution de l'incompatibilité D3DMetal sous CrossOver 26.2 et fiabilisation haute disponibilité du service Assets",
+  "lead": "Analyse factuelle du crash int3 E_NOTIMPL au lancement de 007 First Light sous CrossOver 26.2, greffe isolée des bibliothèques Apple GPTK 4.0 bêta 1, et résolution permanente du blocage de service Assets consécutif à un débordement de mémoire V8 sous macOS launchd.",
+  "date": "3 November 2026",
+  "status": "Vérifié et livré",
+  "theme": "papier",
+  "fontSet": "gtultra",
+  "hero": "hero",
+  "heroAlt": "Schéma d'architecture du correctif CrossOver GPTK 4.0 et de la résilience du service ZenRay Assets",
+  "heroText": "007 First Light · CrossOver 26.2 · GPTK 4.0b1 · Assets Recovery",
+  "heroCaption": "Architecture de l'application isolée CrossOver_007_GPTK4.app et cycle de relance automatique launchd du service Assets.",
+  "footer": "ZenRay Assets · Document de synthèse validé · 3 November 2026",
+  "sources": "Sources.json",
+  "fileLabels": {
+    "hero": "Schéma d'architecture GPTK 4.0 et Assets",
+    "dashboard-incident": "Capture native du panneau Assets lors de l'incident"
+  },
+  "fileRoles": {
+    "hero": "Illustration principale résumant les composants greffés et les verrous de résilience",
+    "dashboard-incident": "Preuve visuelle du symptôme Service indisponible observé par l'utilisateur"
+  },
+  "sections": [
+    {
+      "id": "diagnostic-007",
+      "title": "Diagnostic du crash 007 First Light au démarrage",
+      "eyebrow": "MOTEUR GLACIER ET DIRECTX 12",
+      "html": "<p>Au lancement de 007 First Light dans CrossOver 26.2 sur Apple Silicon, le jeu s'interrompait immédiatement avec l'instruction d'arrêt <code>int3</code> à l'adresse <code>0x00000140d900b3</code> dans <code>007firstlight.exe</code>.</p><p>Les investigations techniques confirmées par CodeWeavers et Simon Meacham démontrent que ce blocage n'était pas provoqué par le système anti-altération Denuvo, mais par l'absence d'une primitive DirectX 12 obligatoire au sein du sous-système de traduction D3DMetal 3.0 embarqué, renvoyant l'erreur <code>E_NOTIMPL</code> lors de la phase d'initialisation du moteur Glacier (IO Interactive).</p><p>Le moteur Glacier sollicite en effet les fonctionnalités DirectX 12 avancées (Enhanced Barriers et mesh shaders), non supportées dans la couche D3DMetal de CrossOver 26.2.</p>",
+      "prompts": [
+        {
+          "title": "Instruction de Matthieu (Correctif 007 First Light)",
+          "date": "3 November 2026, 14:54 +0100",
+          "open": true,
+          "text": "Applique simplement ce correctif ou code le directement : 007 First Light — now running on Apple Silicon Mac via CrossOver + GPTK 4.0 beta\nGame Porting Toolkit\nHuge thanks to Simon Meacham on the CrossOver forums for figuring this out and sharing the steps.\nOriginal post link: Simon Meacham\nTL;DR: The boot crash was an unimplemented D3D12 function in D3DMetal. Apple's GPTK 4.0 beta 1 (WWDC26) implements it. Grafting it into CrossOver via CXPatcher gets the game running on Apple Silicon."
+        }
+      ]
+    },
+    {
+      "id": "greffe-gptk4",
+      "title": "Greffe isolée de GPTK 4.0b1 sous CrossOver",
+      "eyebrow": "ARCHITECTURE DU BUNDLE MAC",
+      "html": "<p>Pour résoudre l'incompatibilité sans compromettre la stabilité des autres bouteilles CrossOver, une application distincte a été déployée dans <code>/Applications/CrossOver_007_GPTK4.app</code>, préservant l'exécutable d'origine <code>/Applications/CrossOver.app</code> en D3DMetal 3.0.</p><p>Les bibliothèques issues d'Apple Game Porting Toolkit 4.0 bêta 1 ont été substituées en tant qu'ensemble cohérent dans le sous-dossier <code>Contents/SharedSupport/CrossOver/lib64/apple_gptk/</code> :</p><ul><li><code>external/D3DMetal.framework</code> (7,46 Mo contre 5,26 Mo dans l'original, incluant <code>libmetalirconverter.dylib</code>, <code>libdxcompiler.dylib</code> et <code>default.metallib</code>) ;</li><li><code>external/libd3dshared.dylib</code> (241 Ko contre 95 Ko) ;</li><li>Couche d'interfaçage Wine x86_64-unix : <code>d3d12.so</code>, <code>dxgi.so</code>, <code>d3d11.so</code>, <code>nvapi64.so</code>, <code>nvngx.so</code>, <code>atidxx64.so</code>.</li></ul><p>Une sauvegarde complète des fichiers remplacés a été consignée dans <code>external.gptk3-backup/</code>. Les signatures de code Apple et empreintes SHA-256 ont été validées. Le lancement sous cette version isolée confirme le démarrage du jeu sans crash initial (processus 90072 actif).</p>"
+    },
+    {
+      "id": "panne-service-assets",
+      "title": "Analyse de l'incident « Service Assets indisponible »",
+      "eyebrow": "DIAGNOSTIC SYSTÈME ET MÉMOIRE",
+      "html": "<p>Durant le cycle de travail, le popover de la barre des menus de ZenRay Assets affichait l'état d'alerte « Service indisponible - lecture 3 nov., 13:20 », avec interruption des transferts alors que l'application <code>ZenRay Assets.app</code> demeurait active.</p><p>L'examen approfondi des journaux système <code>Service.error.log</code> et de l'ordonnanceur macOS launchd a mis en évidence trois défaillances conjuguées :</p><ol><li><strong>Épuisement de la mémoire V8 (Heap OOM) :</strong> Lors de chaque publication de projet dans <code>AssetsService.mjs</code>, l'instruction <code>[...this.projects.keys()].map(id => this.snapshot(id, { cloud: true }))</code> matérialisait simultanément les inventaires complets des 48 projets (364 965 fichiers), saturant le plafond heap de 8 Go et provoquant une sortie anormale <code>SIGABRT</code>.</li><li><strong>Perte du code d'erreur par le lanceur :</strong> Dans <code>Daemon.mjs</code>, la fin du processus esclave était écoutée par <code>child.on('exit', code => { process.exitCode = code || 0 })</code>. Or, un arrêt par signal confère la valeur <code>null</code> à la variable <code>code</code>, transformant silencieusement le crash en code de sortie <code>0</code> (succès).</li><li><strong>Arrêt définitif par launchd :</strong> Le fichier <code>com.zenray.assets.plist</code> était configuré avec <code>KeepAlive = false</code>. Traitant le code 0 comme un arrêt régulier, launchd ne relançait jamais le service d'arrière-plan, laissant l'interface utilisateur déconnectée.</li></ol>",
+      "figures": [
+        {
+          "id": "dashboard-incident",
+          "caption": "Symptôme constaté : popover natif bloqué sur « Service indisponible » après le crash mémoire du serveur."
+        }
+      ]
+    },
+    {
+      "id": "correctif-assets",
+      "title": "Correctifs structurels et résilience haute disponibilité",
+      "eyebrow": "FIABILISATION PERMANENTE",
+      "html": "<p>Quatre correctifs chirurgicaux ont été implémentés et prouvés pour éradiquer définitivement ce scénario de panne :</p><p><strong>1. Périmètre de publication borné (AssetsService.mjs) :</strong> La publication d'un projet ne charge désormais que le projet cible, ses consommateurs directs et la fermeture transitive de ses dépendances partagées (couvert par <code>AssetsPublicationScope.test.js</code>). Les 47 autres inventaires restent hors mémoire.</p><p><strong>2. Rétablissement de la politique de relance launchd (ServiceLifecycle.mjs & ServiceControl.mjs) :</strong> La directive <code>KeepAlive: { SuccessfulExit: false }</code> a été rétablie dans le LaunchAgent. Tout arrêt anormal déclenche une résurrection automatique et immédiate par le système d'exploitation.</p><p><strong>3. Traitement rigoureux des signaux de fin (Daemon.mjs) :</strong> Le module <code>serviceExitCode(code, signal, stopping)</code> transforme tout arrêt par signal ou code non nul en échec réel (code 1), tout en préservant la sortie propre (code 0) lors d'une fermeture explicite de l'application.</p><p><strong>4. Sécurisation de l'arrêt des processus (ServiceControl.mjs) :</strong> La routine <code>stopProcesses</code> intègre une boucle d'attente active bornée de 500 ms après <code>SIGKILL</code> afin de garantir la libération complète du PID par le noyau avant tout nouveau bootstrap.</p>"
+    },
+    {
+      "id": "preuves-composants",
+      "title": "Inventaire et preuves mesurées",
+      "eyebrow": "VALIDATION ET CONTRAT DU LOGICIEL",
+      "html": "<p>Les vérifications automatisées et contrôles en temps réel confirment le rétablissement nominal de la chaîne complète :</p><ul><li>Tests unitaires et d'intégration : <code>ServiceLifecycle.test.js</code> (2/2 verts), <code>AssetsPublicationScope.test.js</code> (1/1 vert), <code>ServiceControl.test.js</code> (5/5 verts).</li><li>Test réel d'auto-relance macOS : <code>ServiceLifecycle.launchd.test.js</code> vérifie le redémarrage automatique d'un démon tué par SIGKILL et son arrêt persistant après bootout.</li><li>Contrat logiciel Assets : <code>CheckSkillContract.mjs</code> validé sans écart (108 fichiers conformes, empreinte skill 8c87c14f).</li><li>Service vivant : PID 38224 actif sous contrôle de l'application hôte (PID 774), répondant aux requêtes du panneau natif en 1,8 s sans latence.</li></ul>",
+      "fileIndex": true,
+      "fileIndexCollapsed": false
+    }
+  ]
+}
