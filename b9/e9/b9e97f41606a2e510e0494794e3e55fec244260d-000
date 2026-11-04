@@ -1,0 +1,210 @@
+{
+  "projectId": "007-first-light-crossover-3-november-2026",
+  "title": "007 First Light sur Mac",
+  "generatedAt": "2026-11-04T13:42:54+01:00",
+  "entries": [
+    {
+      "id": "gptk4-installed",
+      "eventAt": "2026-11-03",
+      "recordedAt": "2026-11-03T14:56:00+01:00",
+      "evidence": "D3DMetal 4.0b1, codesign Apple, lsof processus 90072.",
+      "eventTimeKnown": false
+    },
+    {
+      "id": "service-recovery-tested",
+      "eventAt": "2026-11-03T15:22:36+01:00",
+      "recordedAt": "2026-11-04T13:42:01+01:00",
+      "evidence": "Test launchd réel : crash, redémarrage, puis arrêt durable par bootout."
+    }
+  ],
+  "mapping": "IndexMapping.json",
+  "article": "Articles/index.html",
+  "files": [
+    {
+      "fileId": "workshop:AGENTS.md",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/AGENTS.md",
+      "role": "Rôle non confirmé",
+      "sha256": "3c4d14ebc9e39b79d63e58b666797a7fefe6c45ee7e742e937bc3c6e415a1002"
+    },
+    {
+      "fileId": "workshop:Articles/3-November-2026-007-first-light-gptk4/Article.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/3-November-2026-007-first-light-gptk4/Article.json",
+      "role": "Document et source du correctif",
+      "sha256": "c4ddcb64d48dabaf0e4f6e7b99dbfe876969802549494d749a04fac79918eab2"
+    },
+    {
+      "fileId": "workshop:Articles/3-November-2026-007-first-light-gptk4/ArticleCover.jpg",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/3-November-2026-007-first-light-gptk4/ArticleCover.jpg",
+      "role": "Rôle non confirmé",
+      "sha256": "6118227bff9fae9a76e56d4c585f09a6ca42a645ae01736a84480711b83d725c"
+    },
+    {
+      "fileId": "workshop:Articles/3-November-2026-007-first-light-gptk4/assets/dashboard-incident.png",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/3-November-2026-007-first-light-gptk4/assets/dashboard-incident.png",
+      "role": "Rôle non confirmé",
+      "sha256": "192454a54eeae8ed5ca3ce56ac69376f4dcba4070fcdefd7af357810968ae64b"
+    },
+    {
+      "fileId": "workshop:Articles/3-November-2026-007-first-light-gptk4/assets/hero-007-gptk4-fix.png",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/3-November-2026-007-first-light-gptk4/assets/hero-007-gptk4-fix.png",
+      "role": "Rôle non confirmé",
+      "sha256": "13e04358d86348e4a060fd829bd9e8985c76015a35a09fa7c8021ad62c1a61a4"
+    },
+    {
+      "fileId": "workshop:Articles/3-November-2026-007-first-light-gptk4/index.html",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/3-November-2026-007-first-light-gptk4/index.html",
+      "role": "Document et source du correctif",
+      "sha256": "5f2e977958833c2242d7547d53d8f966b3c3fdf4f9b33d34f608101df19e8b9d"
+    },
+    {
+      "fileId": "workshop:Articles/3-November-2026-007-first-light-gptk4/Sources.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/3-November-2026-007-first-light-gptk4/Sources.json",
+      "role": "Document et source du correctif",
+      "sha256": "dfd86355b56408156594712a52f138db79d311f7628a004349252782a5ec6aaa"
+    },
+    {
+      "fileId": "workshop:Articles/Figures/figure-1.svg",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/Figures/figure-1.svg",
+      "role": "Document et source du correctif",
+      "sha256": "2aa6269ec408cc94f9ddfcebe6c1d0369af5f8b13f3e4ad8af27b6518af2e403"
+    },
+    {
+      "fileId": "workshop:Articles/Figures/figure-2.svg",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/Figures/figure-2.svg",
+      "role": "Document et source du correctif",
+      "sha256": "207cdb94882a249c25f9a16d31eb0a486f984f9364a90d50720fdaebddfa669c"
+    },
+    {
+      "fileId": "workshop:Articles/index.html",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/index.html",
+      "role": "Document et source du correctif",
+      "sha256": "20713a0d4968aab0b64cd6f7d5a1b2b4d5a625eb0c0c41ffaec271523fd2a3c5"
+    },
+    {
+      "fileId": "workshop:Articles/Preview-1440.png",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/Preview-1440.png",
+      "role": "Rôle non confirmé",
+      "sha256": "1fa11081e5f99a01b8304b6d70713ff14ab518e96281de696219402b63750e7c"
+    },
+    {
+      "fileId": "workshop:Articles/Preview-390.png",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Articles/Preview-390.png",
+      "role": "Rôle non confirmé",
+      "sha256": "6d34003811f8187bc67058a4eb2b60f8a4b6f00cd60cd2d8aeca99f180438211"
+    },
+    {
+      "fileId": "workshop:CLAUDE.md",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/CLAUDE.md",
+      "role": "Rôle non confirmé",
+      "sha256": "3c4d14ebc9e39b79d63e58b666797a7fefe6c45ee7e742e937bc3c6e415a1002"
+    },
+    {
+      "fileId": "workshop:Drafts/Article/Article.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Drafts/Article/Article.json",
+      "role": "Document et source du correctif",
+      "sha256": "c4ddcb64d48dabaf0e4f6e7b99dbfe876969802549494d749a04fac79918eab2"
+    },
+    {
+      "fileId": "workshop:Drafts/Article/ArticleCover.jpg",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Drafts/Article/ArticleCover.jpg",
+      "role": "Rôle non confirmé",
+      "sha256": "6118227bff9fae9a76e56d4c585f09a6ca42a645ae01736a84480711b83d725c"
+    },
+    {
+      "fileId": "workshop:Drafts/Article/assets/dashboard-incident.png",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Drafts/Article/assets/dashboard-incident.png",
+      "role": "Rôle non confirmé",
+      "sha256": "192454a54eeae8ed5ca3ce56ac69376f4dcba4070fcdefd7af357810968ae64b"
+    },
+    {
+      "fileId": "workshop:Drafts/Article/assets/hero-007-gptk4-fix.png",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Drafts/Article/assets/hero-007-gptk4-fix.png",
+      "role": "Rôle non confirmé",
+      "sha256": "13e04358d86348e4a060fd829bd9e8985c76015a35a09fa7c8021ad62c1a61a4"
+    },
+    {
+      "fileId": "workshop:Drafts/Article/index.html",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Drafts/Article/index.html",
+      "role": "Document et source du correctif",
+      "sha256": "5f2e977958833c2242d7547d53d8f966b3c3fdf4f9b33d34f608101df19e8b9d"
+    },
+    {
+      "fileId": "workshop:Drafts/Article/Sources.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Drafts/Article/Sources.json",
+      "role": "Document et source du correctif",
+      "sha256": "dfd86355b56408156594712a52f138db79d311f7628a004349252782a5ec6aaa"
+    },
+    {
+      "fileId": "workshop:Index.md",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Index.md",
+      "role": "Rôle non confirmé",
+      "sha256": "75fe5fca63a8bf21d6f386bbf6cdf321ddad03f9ccd8c44cbe8ebc1c87aa3438"
+    },
+    {
+      "fileId": "workshop:IndexMapping.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/IndexMapping.json",
+      "role": "Document et source du correctif",
+      "sha256": null
+    },
+    {
+      "fileId": "workshop:ProjectInfo.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/ProjectInfo.json",
+      "role": "Document et source du correctif",
+      "sha256": null
+    },
+    {
+      "fileId": "workshop:Scripts/BuildSynthesis.py",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Scripts/BuildSynthesis.py",
+      "role": "Document et source du correctif",
+      "sha256": "1ed30894b6ca6cb5e98caf8f23b7cb673a0d657b5d6b3044919d71834e9f9a2e"
+    },
+    {
+      "fileId": "workshop:Scripts/PublishSynthesis.mjs",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Scripts/PublishSynthesis.mjs",
+      "role": "Rôle non confirmé",
+      "sha256": "1b99abd058133b917833ba101cb1a64727a0df820d2b874f07acf49de72c5acb"
+    },
+    {
+      "fileId": "workshop:Synthesis.html",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/Synthesis.html",
+      "role": "Document et source du correctif",
+      "sha256": "20713a0d4968aab0b64cd6f7d5a1b2b4d5a625eb0c0c41ffaec271523fd2a3c5"
+    },
+    {
+      "fileId": "workshop:SynthesisSource.json",
+      "path": "/Users/zenray/.claude/tmp/tmp-007-first-light-crossover-3-november-2026/SynthesisSource.json",
+      "role": "Document et source du correctif",
+      "sha256": "dcc62d3c5c21ec445b8a2406357064b7962a217d6b195f53bebcb8cb181a3e45"
+    },
+    {
+      "fileId": "project-notes:FEEDBACK.md",
+      "path": "/Users/zenray/.claude/Memory1/Projects/007-first-light-crossover-3-november-2026/FEEDBACK.md",
+      "role": "Rôle non confirmé",
+      "sha256": "cddb3903e4ff70a08e28247c3a7ed888d45da40f9c662df2308680be670dcbb6"
+    },
+    {
+      "fileId": "project-notes:FileMap.md",
+      "path": "/Users/zenray/.claude/Memory1/Projects/007-first-light-crossover-3-november-2026/FileMap.md",
+      "role": "Rôle non confirmé",
+      "sha256": "410af3db016735ba54c264942d0a8036081002b865272a1323a7556542f8e271"
+    },
+    {
+      "fileId": "project-notes:Project.json",
+      "path": "/Users/zenray/.claude/Memory1/Projects/007-first-light-crossover-3-november-2026/Project.json",
+      "role": "Document et source du correctif",
+      "sha256": "d433878c7372450fdba67d4f4472fe92990a8741303c45ed9bbf014f2d0a5b25"
+    },
+    {
+      "fileId": "project-notes:Project1.md",
+      "path": "/Users/zenray/.claude/Memory1/Projects/007-first-light-crossover-3-november-2026/Project1.md",
+      "role": "Rôle non confirmé",
+      "sha256": "f099ea9184d8b272b42ab8340f3d8a75de95460db06ade5a524f57fea5b7458a"
+    },
+    {
+      "fileId": "project-notes:Rules.md",
+      "path": "/Users/zenray/.claude/Memory1/Projects/007-first-light-crossover-3-november-2026/Rules.md",
+      "role": "Rôle non confirmé",
+      "sha256": "2e24b5d837634bc99c79f236dccf372398ed6d61dc57bfd1597ebb26a4bdac9a"
+    }
+  ]
+}

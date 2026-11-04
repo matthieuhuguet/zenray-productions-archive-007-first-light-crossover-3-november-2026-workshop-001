@@ -1,0 +1,14 @@
+// 4 November 2026, 13:48 Europe/Paris: update only this project's article after verifying its inventoried bytes.
+import {readFile} from 'node:fs/promises'
+import {createHash} from 'node:crypto'
+import {fileURLToPath} from 'node:url'
+import path from 'node:path'
+import {requestAssets} from '/Users/zenray/Create/Build/Productions/GithubProductions/ZenRayProgress/scripts/Assets/BridgeClient.mjs'
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..')
+const source=JSON.parse(await readFile(path.join(root,'SynthesisSource.json'),'utf8'))
+await requestAssets({action:'inventory',projectId:source.projectId})
+const bytes=await readFile(path.join(root,'Articles/index.html'))
+const article={fileId:'workshop:Articles/index.html',title:source.title,sha256:createHash('sha256').update(bytes).digest('hex'),thumbnailUrl:'data:image/jpeg;base64,'+(await readFile(path.join(root,'Articles/Cover.jpg'))).toString('base64')}
+await requestAssets({action:'set-article',projectId:source.projectId,article})
+await requestAssets({action:'publish',projectId:source.projectId})
+console.log(JSON.stringify({projectId:source.projectId,fileId:article.fileId,sha256:article.sha256}))

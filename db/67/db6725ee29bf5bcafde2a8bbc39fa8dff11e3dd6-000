@@ -1,0 +1,42 @@
+{
+  "projectId": "007-first-light-crossover-3-november-2026",
+  "title": "007 First Light sur Mac",
+  "paragraphs": [
+    "Ce correctif permet à 007 First Light de franchir son crash de démarrage sur un Mac Apple Silicon. Une copie séparée de CrossOver utilise les bibliothèques graphiques Apple GPTK 4.0 bêta 1, tandis que l’installation originale reste disponible.",
+    "Le contrôle du 3 November 2026 confirme que le jeu charge les nouvelles bibliothèques signées par Apple et reste actif pendant plus de 26 minutes. L’arrivée dans une partie jouable n’est pas vérifiée ; le journal signale aussi une limite du cache de variantes graphiques.",
+    "La sauvegarde Assets rencontre également une panne mémoire. La publication limite désormais les inventaires qu’elle prépare, et macOS relance le serveur après un crash lorsque l’application Assets est ouverte. Le bouton Quitter conserve l’arrêt complet."
+  ],
+  "entries": [
+    {
+      "id": "gptk4-installed",
+      "eventAt": "2026-11-03",
+      "recordedAt": "2026-11-03T14:56:00+01:00",
+      "evidence": "D3DMetal 4.0b1, codesign Apple, lsof processus 90072.",
+      "eventTimeKnown": false
+    },
+    {
+      "id": "service-recovery-tested",
+      "eventAt": "2026-11-03T15:22:36+01:00",
+      "recordedAt": "2026-11-04T13:42:01+01:00",
+      "evidence": "Test launchd réel : crash, redémarrage, puis arrêt durable par bootout."
+    }
+  ],
+  "fonts": {
+    "title": "/Users/zenray/Library/Fonts/GT-Ultra-Standard-Regular.otf",
+    "body": "/Users/zenray/Library/Fonts/AdobeClean-Regular.otf"
+  },
+  "externalFiles": [
+    {
+      "path": "/Applications/CrossOver_007_GPTK4.app",
+      "role": "Copie CrossOver corrigée, conservée sur le Mac"
+    },
+    {
+      "path": "/Users/zenray/.claude/tmp/tmp-007-firstlight-crossover/gptk4-launch.log",
+      "role": "Journal du lancement initial"
+    },
+    {
+      "path": "/Users/zenray/.claude/tmp/tmp-007-firstlight-crossover/run-145054.log",
+      "role": "Journal du crash initial"
+    }
+  ]
+}

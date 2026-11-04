@@ -1,0 +1,40 @@
+# 4 November 2026, 13:43 Europe/Paris: rebuild the simple standalone synthesis from editable text and measured inventory.
+import base64, hashlib, html, json
+from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA = json.loads((ROOT / 'SynthesisSource.json').read_text())
+STAMP = datetime.now(ZoneInfo('Europe/Paris')).isoformat(timespec='seconds')
+FONT = {key: base64.b64encode(Path(value).read_bytes()).decode() for key, value in DATA['fonts'].items()}
+CSS = ''.join("@font-face{font-family:'%s';src:url(data:font/otf;base64,%s)}" % (name, FONT[key]) for key, name in [('title','GT Ultra'),('body','Adobe Clean')])
+
+def figure(title, rows, footer):
+    content = ['<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><style>'+CSS+'text{fill:#182124;font-family:Adobe Clean} .title{font-family:GT Ultra}</style><rect width="1920" height="1080" rx="32" fill="#f0f4f3"/>', '<text class="title" x="100" y="140" font-size="68">'+html.escape(title)+'</text>']
+    for index, (label, before, after) in enumerate(rows):
+        y = 235 + index * 210
+        content += [f'<text x="100" y="{y}" font-size="34">{html.escape(label)}</text>',f'<rect x="100" y="{y+26}" width="770" height="112" rx="20" fill="#fbe6e1"/><rect x="1050" y="{y+26}" width="770" height="112" rx="20" fill="#d9eee7"/>', f'<text x="140" y="{y+97}" font-size="38">{html.escape(before)}</text><text x="1090" y="{y+97}" font-size="38">{html.escape(after)}</text>', f'<path d="M915 {y+80}h80m-24-22 24 22-24 22" fill="none" stroke="#536b64" stroke-width="5"/>']
+    content += ['<text x="100" y="1000" font-size="30">'+html.escape(footer)+'</text></svg>']
+    return ''.join(content).encode()
+
+figures = [figure('Le correctif graphique', [('Bibliothèques utilisées','D3DMetal 3.0','GPTK 4.0 bêta 1'),('Démarrage observé','Arrêt immédiat : int3','Processus actif plus de 26 min'),('Installation CrossOver','Original conservé','Copie séparée pour 007')], 'Constat du 3 November 2026. Une partie jouable reste à vérifier.'),figure('La reprise des sauvegardes', [('Préparation d’une publication','Inventaires de tous les projets','Projet et dépendances utiles'),('Serveur arrêté par un crash','Considéré comme une sortie réussie','Échec reconnu et relance macOS'),('Fermeture volontaire','Quitter Assets','Serveur et transferts arrêtés')], 'Test réel : arrêt forcé, relance automatique, puis arrêt volontaire conservé.')]
+assets = ROOT / 'Articles' / 'Figures'; assets.mkdir(parents=True, exist_ok=True)
+for index, data in enumerate(figures, 1): (assets / f'figure-{index}.svg').write_bytes(data)
+body = '<h1>'+html.escape(DATA['title'])+'</h1>'+''.join('<p>'+html.escape(p)+'</p>' for p in DATA['paragraphs'])
+body += ''.join('<img width="1920" height="1080" alt="'+alt+'" src="data:image/svg+xml;base64,'+base64.b64encode(data).decode()+'">' for data,alt in zip(figures,['Correctif graphique de 007 First Light','Reprise des sauvegardes Assets']))
+page = '<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+html.escape(DATA['title'])+'</title><style>'+CSS+':root{--body:Adobe Clean,sans-serif;--title:GT Ultra,sans-serif;--width:1040px;--space:32px;--ink:#182124;--paper:#fff}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:22px/1.6 var(--body)}main{max-width:var(--width);margin:auto;padding:64px 32px}h1{font:400 clamp(34px,6vw,64px)/1.12 var(--title);margin:0 0 var(--space)}p{max-width:75ch;margin:0 0 22px}img{display:block;width:100%;height:auto;margin:48px 0 0}@media(max-width:600px){main{padding:28px 18px}body{font-size:19px}}</style></head><body><main>'+body+'</main></body></html>'
+for target in [ROOT/'Articles/index.html',ROOT/'Synthesis.html']: target.write_text(page)
+state_file=Path('/Users/zenray/Library/Application Support/ZenRayAssets')/('Project-'+DATA['projectId']+'.json')
+state=json.loads(state_file.read_text())
+files=[]
+for item in state.get('inventory',{}).get('localFiles',[]):
+    path=Path(item['localPath']); exists=path.is_file(); digest=hashlib.sha256(path.read_bytes()).hexdigest() if exists and path.name not in ['IndexMapping.json','ProjectInfo.json'] else None
+    files.append({'fileId':item['id'],'path':str(path),'role':'Document et source du correctif' if path.suffix in ['.html','.json','.py','.svg'] else 'Rôle non confirmé','present':exists,'sha256':digest,'cloudReceiptSha256':state.get('backups',{}).get(item['id'],{}).get('sha256'),'modifiedAt':datetime.fromtimestamp(path.stat().st_mtime,ZoneInfo('Europe/Paris')).isoformat() if exists else None})
+for path in [ROOT/'Articles/index.html',ROOT/'Synthesis.html',ROOT/'SynthesisSource.json',Path(__file__),*assets.glob('*.svg')]:
+    if not any(item['path']==str(path) for item in files):files.append({'fileId':'workshop:'+str(path.relative_to(ROOT)),'path':str(path),'role':'Synthèse, source éditable ou figure','present':True,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
+mapping={'projectId':DATA['projectId'],'generatedAt':STAMP,'files':files,'externalFiles':DATA['externalFiles'],'note':'Les empreintes des deux fichiers de mapping sont portées par les reçus Assets, afin de ne pas créer de référence récursive.'}
+(ROOT/'IndexMapping.json').write_text(json.dumps(mapping,ensure_ascii=False,indent=2)+'\n')
+info={'projectId':DATA['projectId'],'title':DATA['title'],'generatedAt':STAMP,'entries':DATA['entries'],'mapping':'IndexMapping.json','article':'Articles/index.html','files':[{k:v for k,v in row.items() if k in ['fileId','path','role','sha256']} for row in files]}
+(ROOT/'ProjectInfo.json').write_text(json.dumps(info,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'article':str(ROOT/'Articles/index.html'),'bytes':len(page.encode()),'mappedFiles':len(files)}))
